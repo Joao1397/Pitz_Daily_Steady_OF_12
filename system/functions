@@ -1,0 +1,77 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  12
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      functions;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+#includeFunc streamlinesLine
+(
+    name = streamlines,
+    start = (-0.0205 0.001 0.00001),
+    end = (-0.0205 0.0251 0.00001),
+    nPoints = 10,
+    fields = (p k U)
+)
+
+#includeFunc residuals
+(
+    name = residuals,
+    fields = (p U k epsilon),
+    log = true
+)
+
+// For scalars
+cellMin
+{
+    #includeEtc "caseDicts/postProcessing/volFieldValue/cellMin.cfg"
+    enabled       true;  // true or false
+    log           true; // write to screen
+    fields  (p epsilon k);
+}
+
+cellMax
+{
+    #includeEtc "caseDicts/postProcessing/volFieldValue/cellMax.cfg"
+    enabled       true;  // true or false
+    log           true; // write to screen
+    fields  (p epsilon k);
+}
+
+// For vectors
+cellMinMag
+{
+    #includeEtc "caseDicts/postProcessing/volFieldValue/cellMinMag.cfg"
+    enabled       true;  // true or false
+    log           true; // write to screen
+    fields  (U);
+}
+
+cellMaxMag
+{
+    #includeEtc "caseDicts/postProcessing/volFieldValue/cellMaxMag.cfg"
+    enabled       true;  // true or false
+    log           true; // write to screen
+    fields  (U);
+}
+
+flowRateOutlet
+{
+    #includeEtc "caseDicts/functions/surfaceFieldValue/patchValue.cfg"
+    patch   outlet;
+    fields  (phi);
+    operation sum;
+    enabled       true;  // true or false
+    log           true; // write to screen
+}
+
+// ************************************************************************* //
