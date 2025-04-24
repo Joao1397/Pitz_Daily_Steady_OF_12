@@ -1,0 +1,101 @@
+################################################################
+
+Usefull commands in OpenFOAM
+
+-- foamListTimes -rm
+---> Erasing only the saved solutions.
+
+-- foamListTimes -rm: 
+---> Erasing only the saved solutions.
+
+-- foamCleanTutorials
+---> Erase the mesh and the solution in the current case folder.
+
+-- foamCleanPolyMesh
+---> Erase only the mesh.
+
+-- lscpu
+---> How many processors/cores ou have available in your computer.
+
+-- foamVersion
+---> tells you the OpenFOAM version.
+
+-- | 
+---> Concatenar comandos. 
+----> blockMesh | tee log.blockMesh. 
+
+-- tee
+---> Imprime en la terminal pero guarda lo impreso en un archivo de tu preferencia.
+----> tee log.blockMesh.
+
+#################################################################
+
+Alias used in OpenFOAM
+
+-- alias src
+---> 'cd $FOAM_SRC'
+-- alias lib
+---> 'cd $FOAM_LIBBIN'
+-- alias app
+---> 'cd $FOAM_APP'
+-- alias sol
+---> 'cd $FOAM_SOLVERS'
+-- alias mod
+---> 'cd $FOAM_MODULES'
+-- alias util
+---> 'cd $FOAM_UTILITIES'
+-- alias tut
+---> 'cd $FOAM_TUTORIALS'
+-- alias run
+---> 'cd $FOAM_RUN'
+-- alias foam
+---> 'cd $WM_PROJECT_DIR'
+
+#################################################################
+
+MeshQuality metrics in OpenFOAM
+
+-- closedThreshold:
+---> This metric checks if the mesh is topologically closed. It calculates the ratio of the unclosed surface area to the total surface area of the mesh.
+--->> closedThreshold = 1.0e-6
+
+-- aspectThreshold
+---> Aspect ratio describes how "stretched" or distorted a cell is. It's the ratio of the longest dimension of a cell to its shortest dimension (or a related measure depending on the cell shape).
+--->> aspectThreshold = 1000
+
+-- nonOrthThreshold
+---> Non-orthogonality refers to the deviation of the vector connecting the centers of two adjacent cells from being perpendicular to their shared face. Ideally, these vectors should be orthogonal to the face for accurate discretization of diffusion terms. OpenFOAM calculates the maximum non-orthogonality angle (in degrees) between the cell-to-cell center vector and the face normal vector across all internal faces.
+----> nonOrthThreshold = 70
+----> nonOrthThreshold = 80 #WD 
+
+-- skewThreshold
+---> Skewness measures how much a cell deviates from its ideal shape. Involves the distance between the face center and the midpoint of the line connecting the centers of the two cells sharing that face.
+----> skewThreshold = 4
+----> skewThreshold = 8 #WD
+
+-- planarCosAngle
+---> It assesses how much a face deviates from being perfectly flat. It calculates the cosine of the angle between the normals of the triangles that make up a face (if the face is non-planar, it can be divided into triangles). A cosine value close to 1 indicates a nearly planar face, while a value close to -1 indicates a highly non-planar (folded) face. 
+----> planarCosAngle = 1.0e-6
+
+To convert the faulty sets to VTK format you can use the utility foamToVTK. \( foamToVTK -set_type name_of_sets \) where \( set_type \) is the type of sets (faceSet, cellSet, pointSet, surfaceFields) and \( name_of_sets \) is the name of the set located in the directory constant/polyMesh/sets (highAspectRatioCells, nonOrthoFaces, wrongOrientedFaces, skewFaces, unusedPoints, and so on). At the end, foamToVTK will create a directory named VTK, where you will find the failed faces/cells/points in VTK format.
+
+#################################################################
+
+Applications used in OpenFOAM
+
+-- decomposePar
+---> It executes the reconstructPar command and sends both its normal output (standard output) and any error messages it might produce (standard error) to the file named log.reconstructPar. This is a common way to capture all the output of a command, whether it's successful information or error reports, into a single log file for later review.
+----> decomposePar > log.decomposePar 2>&1
+
+-- checkMesh
+---> This line executes the checkMesh utility on your OpenFOAM case. It instructs checkMesh to:
+---> Perform its standard mesh quality checks.
+---> Use any custom mesh quality criteria defined in the system/meshQualityDict file (due to the -meshQuality option).
+---> Write sets of any problematic mesh entities (cells, faces, points that fail the quality checks) to the constant/sets directory (due to the -writeSets option).
+---> Save all the output from the checkMesh command, including any reports on the mesh quality and any error messages, into a file named log.checkMesh in the current directory.
+----> checkMesh -writeSets -meshQuality > log.checkMesh 2>&1
+
+renumberMesh
+---> The renumberMesh command in OpenFOAM is a utility used to reorder the cells in a mesh to reduce the bandwidth of the system matrices. This can lead to improved solver performance, especially for iterative solvers. While the default method is often Cuthill-McKee, other methods might be available depending on your OpenFOAM version
+----> mpirun -np 2 renumberMesh -overwrite -parallel > log.renumberMesh 2>&1
+

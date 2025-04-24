@@ -1,0 +1,39 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  12
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 12-93bacf557635
+Exec   : decomposePar
+Date   : Apr 23 2025
+Time   : 18:31:52
+Host   : "TheFirstMaki"
+PID    : 19286
+I/O    : uncollated
+Case   : /home/jose_da_silva/OpenFOAM/Joao-12/Pitz_Daily_Steady_OF_12
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+
+
+--> FOAM FATAL ERROR: 
+
+    Processor meshes exist but have no addressing.
+
+    This could be because the processor meshes have changed. Decomposing the
+    mesh would overwrite that change. If you are sure that this is appropriate,
+    then delete the "processor*/constant/polyMesh" directories and re-run this
+    command.
+
+    From function bool Foam::domainDecomposition::readDecompose()
+    in file domainDecomposition.C at line 482.
+
+FOAM exiting
+

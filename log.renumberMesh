@@ -1,0 +1,65 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  12
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : 12-93bacf557635
+Exec   : renumberMesh -overwrite -parallel
+Date   : Apr 23 2025
+Time   : 18:31:53
+Host   : "TheFirstMaki"
+PID    : 19292
+I/O    : uncollated
+Case   : /home/jose_da_silva/OpenFOAM/Joao-12/Pitz_Daily_Steady_OF_12
+nProcs : 2
+Slaves : 1("TheFirstMaki.19293")
+Pstream initialised with:
+    floatTransfer      : false
+    nProcsSimpleSum    : 0
+    commsType          : nonBlocking
+    polling iterations : 0
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+Mesh size: 12225
+Before renumbering :
+    band           : 59
+    profile        : 602693
+
+Using default renumberMethod.
+
+Selecting renumberMethod CuthillMcKee
+
+Reading geometric fields
+
+Reading volScalarField v2
+Reading volScalarField nut
+Reading volScalarField p
+Reading volScalarField k
+Reading volScalarField epsilon
+Reading volScalarField omega
+Reading volScalarField f
+Reading volScalarField nuTilda
+Reading volScalarField yPlus
+Reading volVectorField wallShearStress
+Reading volVectorField U
+Reading volVectorField vorticity
+Reading surfaceScalarField Pe
+
+After renumbering :
+    band           : 59
+    profile        : 602693
+
+Writing mesh to "constant"
+
+End
+
+Finalising parallel run
